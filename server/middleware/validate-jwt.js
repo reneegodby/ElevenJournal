@@ -20,7 +20,7 @@ const validateJWT = async(req, res, next) => {
     ){
         const { authorization } = req.headers;
         //Next, we use object deconstruction to pull the value of the authorization header and store it in a variable called authorization.
-        // console.log("authorization -->", authorization);
+        console.log("authorization -->", authorization);
 
         const payload = authorization
         ? jwt.verify(
@@ -37,18 +37,18 @@ const validateJWT = async(req, res, next) => {
             //another ternary w/in the ternary. If we have token that includes the word "Bearer", we extrapolate and return just the token from the whole string (authorization.split(" ")[1])
             //If the word "Bearer" was not included in the authorization header, then return just the token. 
             //Long story short, dependent on the token and the conditional statement, the value of payload will either be the token excluding the word "Bearer" OR undefined.
-            // console.log("payload -->", payload);
+            console.log("payload -->", payload);
 
         if (payload) {
             //Here is another conditional statement that checks for a truthy value in payload
 
             let foundUser = await UserModel.findOne({ where: { id: payload.id }});
             //If payload comes back as a truthy value, we use Sequelize's findOne method to look for a user in our UserModel where the ID of the user in database matches the ID stored in the token. It then stores the value of the located user in a variable called foundUser.
-            // console.log("foundUser -->", foundUser);
+            console.log("foundUser -->", foundUser);
 
             if (foundUser) {
                 //Another nested conditional statement! This one checks if the value of foundUsers is truthy.
-                // console.log("request -->", req);
+                console.log("request -->", req);
 
                 req.user = foundUser;
                 //If we managed to find a user in the database that matches the information from the token, we create a new property called user to express's request object.
