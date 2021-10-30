@@ -1,3 +1,5 @@
+require("dotenv").config();
+//By importing this package and invoking the config() method, we can make items in an .env file available to our whole application.
 const Express = require("express");
 //We require the use of the express npm pckg that we installed in our dependencies.
 const app = Express();
@@ -14,12 +16,15 @@ app.use('/test', (req, res) => {
     res.send('This is a message from the test endpoint on the server')
 }); //if you GET http://localhost:3000/test, you will see this message in postman. res.send is an Express function. res packages up the response object and .send method sends off the response.
 
+app.use("/user", controllers.userController);
+//We call upon the use() method from the Express framework and create a route to access any future functions in our usercontroller.js. The string, '/user', is setting up the endpoint our URL will need to include to access a controller. We use dot notation to step into the bundle of controllers we imported on line 7 to grab the value from the userController key in the controllers/index.js file.
+
+// app.use(require("./middleware/validate-jwt"));
+//We imported the validateJWT middleware, which will check to see if the incoming request has a token. Anything beneath the validateJWT will require a token to access, thus becoming protected. Anything above it will not require a token, remaining unprotected. Therefore, the user routes is not protected, while the journal route is protected. Then told to comment out due to wanting a few routes in the journalcontroller we want exposed to all users.
+
 app.use("/journal", controllers.journalController);
 //We call app.use and in the first parameter create a base URL called /journal to make our base URL "http://localhost:3000/journal"
 //the second parameter for the use() function, we pass in the controllers object and use dot notation to access the desired journalController. This means that all routes created in the journalcontroller.js file will be sub-routes.
-
-app.use("/user", controllers.userController);
-//We call upon the use() method from the Express framework and create a route to access any future functions in our usercontroller.js. The string, '/user', is setting up the endpoint our URL will need to include to access a controller. We use dot notation to step into the bundle of controllers we imported on line 7 to grab the value from the userController key in the controllers/index.js file.
 
 dbConnection.authenticate()
 //we use the db var to access the sequelize instance and its methods from the db file. Then we call upon the authenticate() method. This is an asynchronous method that returns a promise.
