@@ -6,6 +6,9 @@ const app = Express();
 //We create an instance of express to fire off an Express()function which is exported by the Express module to create an Express app.
 const dbConnection = require("./db");
 //Create a db variable that imports the db file.
+
+app.use(require('./middleware/headers'));
+
 const controllers = require("./controllers");
 //we import the controllers as a bundle through the object that we just exported in the index.js and store it in a variable called controllers.
 
