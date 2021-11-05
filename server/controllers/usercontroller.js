@@ -45,7 +45,7 @@ try {
       res.status(201).json({
       message: "User successfully registered",
       user: User,
-      sessionToken: token
+      SessionToken: token
       //The same data that that was added to the database and stored in the User variable (see line 19) is now being sent to the client and stored in a user property. user is the key, User is the value
       //We have added a key of sessionToken and pass it the value of the token.
     });
@@ -99,7 +99,7 @@ router.post("/login", async (req, res) => {
       res.status(200).json({
         user: loginUser,
         message: "User successfully logged in!",
-        sessionToken: token
+        SessionToken: token
       });
     } else{
       res.status(401).json({
